@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Detección de Objetos en Video de Vigilancia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Detección de Objetos en Video</h1>
+
+        <!-- Sección de Carga de Videos -->
+        <div class="section">
+            <h2>Subir Nuevo Video</h2>
+            <div class="upload-container">
+                <input type="file" id="video-upload" accept=".mp4">
+                <button onclick="uploadVideo()">Subir Video</button>
+            </div>
+        </div>
+
+        <!-- Menú de Videos -->
+        <div class="section">
+            <h2>Selección de Videos</h2>
+            <select id="video-select">
+                <option value="">Seleccione un video</option>
+            </select>
+            <button onclick="processVideo()">Procesar Video</button>
+        </div>
+
+        <!-- Barra de Progreso -->
+        <div id="progress-container" class="section" style="display: none;">
+            <h3>Progreso del Procesamiento</h3>
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <p id="progress-text">0%</p>
+        </div>
+
+        <div id="video-container" class="section">
+            <h2>Video Procesado</h2>
+            <video
+                id="video-player"
+                controls
+                crossorigin="anonymous"
+                preload="auto"
+                playsinline
+                type="video/mp4"
+                style="width: 100%; max-width: 800px; display: none;"
+            >
+                <p>Tu navegador no soporta la reproducción de videos.</p>
+            </video>
+            <div id="video-error" style="color: red; display: none;"></div>
+        </div>
+        
+        <!-- Mapa de Calor -->
+        <div class="section">
+            <h2>Mapa de Calor</h2>
+            <div id="heatmap-container"></div>
+        </div>
+
+        <!--  búsqueda existente con: -->
+        <div class="section">
+            <h2>Búsqueda de Objetos</h2>
+            <div class="search-container">
+                <select id="object-search" class="object-select">
+                    <option value="">Seleccione un objeto</option>
+                </select>
+                <button onclick="searchObjects()">Buscar</button>
+            </div>
+            <div id="search-results"></div>
+        </div>
+            
+
+            <div class="section" >
+                <h2>Simulación Stream en Tiempo Real</h2>
+                <div class="stream-controls">
+                    <button onclick="startStreamSimulation()" id="stream-button">Iniciar Stream</button>
+                    <button onclick="stopStreamSimulation()" id="stop-stream-button" style="display: none;">Detener Stream</button>
+                </div>
+                <div id="stream-container">
+                    <img id="stream-view" style="display: none; max-width: 100%; margin-top: 10px;">
+                </div>
+            </div>
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

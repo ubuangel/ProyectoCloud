@@ -1,0 +1,36 @@
+# Usar una imagen base de Python
+FROM python:3.10
+
+# Establecer el directorio de trabajo
+WORKDIR /code/backend
+
+# Copiar el archivo requirements.txt y el código del backend
+COPY ./app/backend /code/backend
+
+# Copiar el frontend para que Uvicorn pueda servir los archivos estáticos
+COPY ./app/frontend /code/frontend
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-dev \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && apt-get clean
+
+# Actualizar pip, setuptools y wheel
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# Instalar bibliotecas de Python
+RUN pip install --no-cache-dir --upgrade -r /code/backend/requirements.txt
+
+# Asegurarse de que los directorios existen
+RUN mkdir -p /code/backend/videos_original /code/backend/output_videos /code/backend/metadata /code/backend/models
+
+# Exponer el puerto 8000
+EXPOSE 8000
+
+# Comando por defecto para ejecutar la aplicación
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
